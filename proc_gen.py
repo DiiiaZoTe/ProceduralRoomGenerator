@@ -174,7 +174,7 @@ class Map:
             for line in range(4):
                 for j in range(0,self.width):
                     if self.roomArray[i][j] == None:
-                        print("        ", end='')
+                        print("* * * * ", end='')
                     else:
                         # draw top part
                         if line == 0:
@@ -209,9 +209,41 @@ class Map:
                                 print("        ",end='')
                 print() # newline
 
+
+# helper function for the main to get input of a positive int
+def getInputPositiveInt(message):
+    value = 0
+    while value <= 0:
+            value = input(message)
+            try:
+                value = int(value)
+                if value <= 0:
+                    print("Sorry, that value is correct")
+            except ValueError:
+                print("That's not a number...")
+                value = 0
+    return value
+
+
 def main():
-    map = Map()
-    map.drawMap()
+    print("------------------------------------------------------")
+    print("                  Room Generator"                      )
+    print("                  By Alex Vencel"                      )
+    print("                 Version: 07/11/19"                    )
+    print("------------------------------------------------------")
+    runProg = 'Y'
+    while(runProg=='Y'):
+        # get input for row and column
+        print()
+        row = getInputPositiveInt("Enter number of rows for the map: ")
+        column = getInputPositiveInt("Enter number of columns for the map: ")
+        map = Map(row,column)
+        map.drawMap()
+        # continue again ?
+        runProg = ''
+        while runProg != 'Y' and runProg != 'N':
+            runProg = input("\nWould you like to continue (Y/n)? ").upper()
+    
 
 if __name__ == "__main__":
     main()
