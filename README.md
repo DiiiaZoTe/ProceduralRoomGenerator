@@ -15,5 +15,13 @@ How to use:
     // or you can generate a new map for same room number count and same row/column size
     map.generateRooms()
     map.drawMap()
+    // you can find the furthest room away from the first room by using
+    room, distance = map.findFurthestFromFirst()
+    // or you can find the furthest from a specific room (you will need to loop through the map array to get the one you want)
+    for i in range(0,map.height):
+            for j in range(0,map.width):
+                room = map.roomArray[i][j]
+                if room != None:
+                    furthest, distance = map.findFurthest(room)
 
-main() countains a sample interactive program (soon)
+main() countains an interactive sample

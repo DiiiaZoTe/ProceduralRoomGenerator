@@ -129,12 +129,58 @@ class Map:
             room.left = -1
         if room.column == self.width-1:
             room.right = -1
-    
+
+    # Finds the furthest room from room number 1 by utilizing findFurthest
+    def findFurthestFromFirst(self):
+        for i in range(0,self.height):
+            for j in range(0,self.width):
+                if self.roomArray[i][j] == None: continue
+                if self.roomArray[i][j].roomNumber == 1:
+                    return self.findFurthest(self.roomArray[i][j])
+
+    # returns the furthest room from the room in parameter, as well as the distance that separate them
+    def findFurthest(self,room):
+        furthest, pathLongest = self.findFursthestHelper(room,0,room,0,0)
+        return furthest, pathLongest
+
+    # recursive function that go through all the rooms until it is an end room
+    # returns the furthest room and the distance to the furthest
+    def findFursthestHelper(self,room,fromDirection,furthest,pathLongest,n):
+        top = 1
+        bottom = 2
+        left = 3
+        right = 4
+        if ((room.top != 1 or fromDirection == bottom)
+            and (room.bottom != 1 or fromDirection == top)
+            and (room.left != 1 or fromDirection == right)
+            and (room.right != 1 or fromDirection == left)): # basecasen
+            if n > pathLongest:
+                return room,n
+            return furthest,pathLongest
+        for toDirection in range(1,5):
+            toRow = room.row
+            toColumn = room.column
+            goToNextRoom = False
+            if room.top == 1 and toDirection == top and fromDirection != bottom:
+                goToNextRoom = True
+                toRow -= 1
+            if room.bottom == 1 and toDirection == bottom and fromDirection != top:
+                goToNextRoom = True
+                toRow += 1
+            if room.left == 1 and toDirection == left and fromDirection != right:
+                goToNextRoom = True
+                toColumn -=1
+            if room.right == 1 and toDirection == right and fromDirection != left:
+                goToNextRoom = True
+                toColumn += 1
+            if goToNextRoom:
+                furthest,pathLongest = self.findFursthestHelper(self.roomArray[toRow][toColumn],toDirection, furthest, pathLongest, n+1)
+        return furthest,pathLongest
+
     # draw the entire map
-    # 
     def drawMap(self):
         print()
-        """ Simple drawing version
+        #""" Simple drawing version
         for i in range(0,self.height):
             for j in range(0,self.width):
                 if self.roomArray[i][j] == None:
@@ -142,7 +188,7 @@ class Map:
                 else:
                     print(" " + str(self.roomArray[i][j].roomNumber) + " ", end="")
             print()
-        """
+        #"""
     # a room is gonna be 8 characters wide
     # and 4 lines tall
     # top line for top
@@ -170,6 +216,7 @@ class Map:
     # |    ==
     # |____==
     #        
+        print()
         for i in range(0,self.height):
             for line in range(4):
                 for j in range(0,self.width):
@@ -229,7 +276,7 @@ def main():
     print("------------------------------------------------------")
     print("                  Room Generator"                      )
     print("                  By Alex Vencel"                      )
-    print("                 Version: 07/11/19"                    )
+    print("                 Version: 07/12/19"                    )
     print("------------------------------------------------------")
     runProg = 'Y'
     while(runProg=='Y'):
@@ -239,6 +286,12 @@ def main():
         column = getInputPositiveInt("Enter number of columns for the map: ")
         map = Map(row,column)
         map.drawMap()
+        for i in range(0,map.height):
+            for j in range(0,map.width):
+                room = map.roomArray[i][j]
+                if room != None:
+                    furthest, distance = map.findFurthest(room)
+                    print("Furthest from room " + str(room.roomNumber) + " is : "  + str(furthest.roomNumber) + " separated by " + str(distance-1) + " rooms.")
         # continue again ?
         runProg = ''
         while runProg != 'Y' and runProg != 'N':
