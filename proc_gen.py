@@ -82,7 +82,6 @@ class Map:
                     c = tmpRoomList[fromRoom].column
                     if self.roomArray[r][c] == None:
                         newRoom = Room(roomNumber+1, r, c, 0, 1, 0, 0)
-                        newRoom.bottom = 1
                         tmpRoomList[fromRoom].top = 1
                         #self.roomArray[tmpRoomList[fromRoom].row][tmpRoomList[fromRoom].column].top = 1
                         self.checkAroundRoom(newRoom)
@@ -93,7 +92,6 @@ class Map:
                     c = tmpRoomList[fromRoom].column
                     if self.roomArray[r][c] == None:
                         newRoom = Room(roomNumber+1, r, c, 1, 0, 0, 0)
-                        newRoom.top = 1
                         tmpRoomList[fromRoom].bottom = 1
                         self.checkAroundRoom(newRoom)
                         self.roomArray[r][c] = newRoom
@@ -103,7 +101,6 @@ class Map:
                     c = tmpRoomList[fromRoom].column-1
                     if self.roomArray[r][c] == None:
                         newRoom = Room(roomNumber+1, r, c, 0, 0, 0 , 1)
-                        newRoom.right = 1
                         tmpRoomList[fromRoom].left = 1
                         self.checkAroundRoom(newRoom)
                         self.roomArray[r][c] = newRoom
@@ -292,6 +289,11 @@ def main():
                 if room != None:
                     furthest, distance = map.findFurthest(room)
                     print("Furthest from room " + str(room.roomNumber) + " is : "  + str(furthest.roomNumber) + " separated by " + str(distance-1) + " rooms.")
+
+        print()
+        keyRoom,keyDistance = map.findFurthestFromFirst()
+        doorRoom,doorDistance = map.findFurthest(keyRoom)
+        print(str(keyRoom.roomNumber) + " is the key room and " + str(doorRoom.roomNumber) + " is the exit room.")
         # continue again ?
         runProg = ''
         while runProg != 'Y' and runProg != 'N':
