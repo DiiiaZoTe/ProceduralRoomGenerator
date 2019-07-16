@@ -72,7 +72,6 @@ class Map:
         tmpRoomList.append(firstRoom)
         # generate new room until we did not reach desired number
         while len(tmpRoomList) < self.roomsCount:
-            fromRoom = 1
             roomNumber = len(tmpRoomList)
             fromRoom = random.randint(0, roomNumber-1) # index room from which we go to a direction
             direction = random.randint(1,4) # 1 = top, 2 = bottom, 3 = left, 4 = right
@@ -82,7 +81,6 @@ class Map:
                 if self.roomArray[r][c] == None:
                     newRoom = Room(roomNumber+1, r, c, 0, 1, 0, 0)
                     tmpRoomList[fromRoom].top = 1
-                    #self.roomArray[tmpRoomList[fromRoom].row][tmpRoomList[fromRoom].column].top = 1
                     self.checkAroundRoom(newRoom)
                     self.roomArray[r][c] = newRoom
                     tmpRoomList.append(newRoom)
