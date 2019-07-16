@@ -74,46 +74,45 @@ class Map:
         while len(tmpRoomList) < self.roomsCount:
             fromRoom = 1
             roomNumber = len(tmpRoomList)
-            if roomNumber + 1 != 1:
-                fromRoom = random.randint(0, roomNumber-1) # index room from which we go to a direction
-                direction = random.randint(1,4) # 1 = top, 2 = bottom, 3 = left, 4 = right
-                if direction == 1 and tmpRoomList[fromRoom].top == 0: # top
-                    r = tmpRoomList[fromRoom].row-1
-                    c = tmpRoomList[fromRoom].column
-                    if self.roomArray[r][c] == None:
-                        newRoom = Room(roomNumber+1, r, c, 0, 1, 0, 0)
-                        tmpRoomList[fromRoom].top = 1
-                        #self.roomArray[tmpRoomList[fromRoom].row][tmpRoomList[fromRoom].column].top = 1
-                        self.checkAroundRoom(newRoom)
-                        self.roomArray[r][c] = newRoom
-                        tmpRoomList.append(newRoom)
-                if direction == 2 and tmpRoomList[fromRoom].bottom == 0: # bottom
-                    r = tmpRoomList[fromRoom].row+1
-                    c = tmpRoomList[fromRoom].column
-                    if self.roomArray[r][c] == None:
-                        newRoom = Room(roomNumber+1, r, c, 1, 0, 0, 0)
-                        tmpRoomList[fromRoom].bottom = 1
-                        self.checkAroundRoom(newRoom)
-                        self.roomArray[r][c] = newRoom
-                        tmpRoomList.append(newRoom)
-                if direction == 3 and tmpRoomList[fromRoom].left == 0: # left
-                    r = tmpRoomList[fromRoom].row
-                    c = tmpRoomList[fromRoom].column-1
-                    if self.roomArray[r][c] == None:
-                        newRoom = Room(roomNumber+1, r, c, 0, 0, 0 , 1)
-                        tmpRoomList[fromRoom].left = 1
-                        self.checkAroundRoom(newRoom)
-                        self.roomArray[r][c] = newRoom
-                        tmpRoomList.append(newRoom)
-                if direction == 4 and tmpRoomList[fromRoom].right == 0: # right
-                    r = tmpRoomList[fromRoom].row
-                    c = tmpRoomList[fromRoom].column+1
-                    if self.roomArray[r][c] == None:
-                        newRoom = Room(roomNumber+1, r, c, 0, 0, 1, 0)
-                        tmpRoomList[fromRoom].right = 1
-                        self.checkAroundRoom(newRoom)
-                        self.roomArray[r][c] = newRoom
-                        tmpRoomList.append(newRoom)
+            fromRoom = random.randint(0, roomNumber-1) # index room from which we go to a direction
+            direction = random.randint(1,4) # 1 = top, 2 = bottom, 3 = left, 4 = right
+            if direction == 1 and tmpRoomList[fromRoom].top == 0: # top
+                r = tmpRoomList[fromRoom].row-1
+                c = tmpRoomList[fromRoom].column
+                if self.roomArray[r][c] == None:
+                    newRoom = Room(roomNumber+1, r, c, 0, 1, 0, 0)
+                    tmpRoomList[fromRoom].top = 1
+                    #self.roomArray[tmpRoomList[fromRoom].row][tmpRoomList[fromRoom].column].top = 1
+                    self.checkAroundRoom(newRoom)
+                    self.roomArray[r][c] = newRoom
+                    tmpRoomList.append(newRoom)
+            if direction == 2 and tmpRoomList[fromRoom].bottom == 0: # bottom
+                r = tmpRoomList[fromRoom].row+1
+                c = tmpRoomList[fromRoom].column
+                if self.roomArray[r][c] == None:
+                    newRoom = Room(roomNumber+1, r, c, 1, 0, 0, 0)
+                    tmpRoomList[fromRoom].bottom = 1
+                    self.checkAroundRoom(newRoom)
+                    self.roomArray[r][c] = newRoom
+                    tmpRoomList.append(newRoom)
+            if direction == 3 and tmpRoomList[fromRoom].left == 0: # left
+                r = tmpRoomList[fromRoom].row
+                c = tmpRoomList[fromRoom].column-1
+                if self.roomArray[r][c] == None:
+                    newRoom = Room(roomNumber+1, r, c, 0, 0, 0 , 1)
+                    tmpRoomList[fromRoom].left = 1
+                    self.checkAroundRoom(newRoom)
+                    self.roomArray[r][c] = newRoom
+                    tmpRoomList.append(newRoom)
+            if direction == 4 and tmpRoomList[fromRoom].right == 0: # right
+                r = tmpRoomList[fromRoom].row
+                c = tmpRoomList[fromRoom].column+1
+                if self.roomArray[r][c] == None:
+                    newRoom = Room(roomNumber+1, r, c, 0, 0, 1, 0)
+                    tmpRoomList[fromRoom].right = 1
+                    self.checkAroundRoom(newRoom)
+                    self.roomArray[r][c] = newRoom
+                    tmpRoomList.append(newRoom)
     
     # helper function that check around a given room
     # and update its boundaries if any
