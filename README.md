@@ -5,6 +5,7 @@ class: - Room
        - Map
 
 How to use: 
+
     // create a map replacing row and column (default 4 if left blank):
     map = Map(row,column)
     // call the drawing function
